@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Card, Spacer, Text, Input, Progress } from '@nextui-org/react';
+import { Button, Card, Spacer, Input, Progress } from '@nextui-org/react';
 
 const Upload = () => {
   const [videoFile, setVideoFile] = useState(null); // Stores the selected video file
   const [previewUrl, setPreviewUrl] = useState(''); // Stores the video preview URL
-  const [uploading, setUploading] = useState(false); // Tracks the upload progress
+  const [uploading, setUploading] = useState(false); // Tracks if uploading is in progress
   const [uploadProgress, setUploadProgress] = useState(0); // Tracks upload percentage
 
   // Handle file selection
@@ -17,7 +17,7 @@ const Upload = () => {
     }
   };
 
-  // Upload the video to Cloudinary
+  // Upload the video to the backend
   const handleUpload = async () => {
     if (!videoFile) {
       alert('Please select a video file first');
@@ -25,70 +25,69 @@ const Upload = () => {
     }
 
     const formData = new FormData();
-    formData.append('file', videoFile);
-    formData.append('upload_preset', 'your_upload_preset'); // Replace with your Cloudinary preset
-    setUploading(true);
+    formData.append('file', videoFile); // Append the video file to form data
+    setUploading(true); // Set uploading state to true
 
     try {
       const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/video/upload`,
+        'http://localhost:5000/api/upload', // Your backend endpoint
         formData,
         {
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            setUploadProgress(percentCompleted);
+            setUploadProgress(percentCompleted); // Update upload progress
           },
         }
       );
 
       console.log('Video uploaded successfully:', response.data.secure_url);
-      alert('Video uploaded successfully!');
+      alert('Video uploaded successfully!'); // Notify user of success
     } catch (error) {
       console.error('Error uploading video:', error);
-      alert('Video upload failed.');
+      alert('Video upload failed.'); // Notify user of failure
     } finally {
-      setUploading(false);
+      setUploading(false); // Reset uploading state
     }
   };
 
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
       <Card bordered shadow={true} hoverable css={{ p: '$8' }}>
-        <Text h3>Upload Your Video</Text>
+        <h3>Upload Your Video</h3>
         <Spacer y={1} />
-        
+
         {/* File Input */}
         <Input
           type="file"
-          accept="video/*"
+          accept="video/*" // Accepts only video files
           onChange={handleFileChange}
           fullWidth
           css={{ marginBottom: '20px' }}
         />
-        
+
         {/* Video Preview */}
         {previewUrl && (
           <div style={{ marginBottom: '20px' }}>
-            <Text h5>Video Preview:</Text>
+            <h5>Video Preview:</h5>
             <video src={previewUrl} controls width="100%" />
           </div>
         )}
-        
+
         {/* Upload Button */}
         <Button
           onClick={handleUpload}
-          disabled={!videoFile || uploading}
+          disabled={!videoFile || uploading} // Disable button if no file or uploading
           size="large"
           color="gradient"
           shadow
         >
           {uploading ? 'Uploading...' : 'Upload Video'}
         </Button>
-        
+
         {/* Progress Indicator */}
         {uploading && (
           <div style={{ marginTop: '20px' }}>
-            <Text h5>Upload Progress:</Text>
+            <h5>Upload Progress:</h5>
             <Progress value={uploadProgress} />
           </div>
         )}
