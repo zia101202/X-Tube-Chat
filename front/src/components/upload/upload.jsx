@@ -40,7 +40,7 @@ const Upload = () => {
         }
       );
 
-      console.log('Video uploaded successfully:', response.data.secure_url);
+      console.log('Video uploaded successfully:', response.data.public_id);
       alert('Video uploaded successfully!'); // Notify user of success
     } catch (error) {
       console.error('Error uploading video:', error);

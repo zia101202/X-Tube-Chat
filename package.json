@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "cloudinary-core": "^2.13.1",
+    "cloudinary-video-player": "^2.1.0",
+    "video-react": "^0.16.0",
+    "video.js": "^8.18.1"
+  }
+}

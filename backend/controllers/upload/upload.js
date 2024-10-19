@@ -1,5 +1,3 @@
-// uploadController.js
-
 const cloudinary = require('../../config/cloudinary');
 
 const uploadFile = async (req, res) => {
@@ -9,23 +7,27 @@ const uploadFile = async (req, res) => {
       return res.status(400).send('No file uploaded.');
     }
 
- 
+    // Log file details (optional for debugging purposes)
+    console.log('File mimetype:', req.file.mimetype);
+    console.log('File path:', req.file.path);
 
+    // Upload the file to Cloudinary as a video, allowing all video types
     const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: 'uploads', // Optional folder name in Cloudinary
-      }).catch((err) => {
-        throw new Error('Cloudinary upload failed: ' + err.message);
-        console.log(err.message)
-      });
-      
+      resource_type: 'video', // Specify that the file is a video
+      folder: 'uploads/videos', // Optional folder for videos
+    }).catch((err) => {
+      throw new Error('Cloudinary upload failed: ' + err.message);
+    });
+
     // Send response with the file details
     res.status(200).json({
-      message: 'File uploaded successfully',
-      url: result.secure_url,   // The URL of the uploaded file
+      message: 'Video uploaded successfully',
+      secure_url: result.secure_url,   // The URL of the uploaded video
       public_id: result.public_id,
     });
   } catch (error) {
-    res.status(500).send('Error uploading file.');
+    res.status(500).send('Error uploading video: ' + error.message);
+    console.log(error);
   }
 };
 
