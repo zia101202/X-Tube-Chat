@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const VideoPlayer = ({ id, publicId, ...props }) => {
+const VideoPlayer = ({ id, publicId,}) => {
   const videoRef = useRef();
   const cloudinaryRef = useRef();
   const playerRef = useRef();
@@ -19,17 +19,21 @@ const VideoPlayer = ({ id, publicId, ...props }) => {
   }, []);
 
   return (
-    <div style={{ width: '100%', aspectRatio: `${props.width} / ${props.height}`}}>
-      <video
+    <>
+    <div      style={{ maxWidth: '1000px' ,maxheight: '1000px'}}  > <video
         ref={videoRef}
         id='demo-player'
         className="cld-video-player cld-fluid"
         controls
-        autoPlay
-        data-cld-public-id='uploads/videos/nbhy29pkfh0lrfksxdnk'
-        {...props}
+        data-cld-public-id={publicId}
+   
+       
       />
     </div>
+   
+    </>
+   
+    
   )
 }
 

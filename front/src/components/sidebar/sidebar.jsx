@@ -16,11 +16,11 @@ import ShieldRoundedIcon from "@mui/icons-material/ShieldRounded";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-
+import { useAuth0 } from '@auth0/auth0-react';
 const SidebarComponent = () => {
     // State to manage sidebar collapse
     const [collapsed, setCollapsed] = useState(false);
-
+    const { logout, isAuthenticated } = useAuth0();
     // Function to toggle the collapse state
     const handleToggleSidebar = () => {
         setCollapsed(!collapsed);
@@ -28,8 +28,6 @@ const SidebarComponent = () => {
 
     return (
         <div style={{ display: "flex", height: "100vh" }}>
-           
-
             <Sidebar className="app" collapsed={collapsed}>
                 <Menu>
                     <MenuItem
@@ -66,7 +64,13 @@ const SidebarComponent = () => {
                         <MenuItem icon={<ShieldRoundedIcon />}>Privacy</MenuItem>
                         <MenuItem icon={<NotificationsRoundedIcon />}>Notifications</MenuItem>
                     </SubMenu>
-                    <MenuItem icon={<LogoutRoundedIcon />}>Logout</MenuItem>
+                    
+                    
+                    {isAuthenticated && (
+       <MenuItem onClick={() => logout({ returnTo: window.location.origin })} icon={<LogoutRoundedIcon />}>Log Out</MenuItem>
+      )}
+                    
+                    
                 </Menu>
             </Sidebar>
         </div>

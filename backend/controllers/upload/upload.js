@@ -1,33 +1,44 @@
-const cloudinary = require('../../config/cloudinary');
+// Your current file (e.g., uploadController.js)
+const {
+  uploadVideoToCloudinary,
+} = require("../uploadCloudinary/uploadCloudinary"); // Adjust the path as necessary
+const VideoModel = require("../../models/videoModel/videoModel"); // Capitalized for convention
+const UserModel = require("../../models/userModel/userModel"); // Assuming you have a user model
 
 const uploadFile = async (req, res) => {
+
   try {
     // Check if file is provided
     if (!req.file) {
-      return res.status(400).send('No file uploaded.');
+      return res.status(400).send("No file uploaded.");
     }
 
-    // Log file details (optional for debugging purposes)
-    console.log('File mimetype:', req.file.mimetype);
-    console.log('File path:', req.file.path);
+    // Await the result of the upload
+    const { secure_url, public_id, message } = await uploadVideoToCloudinary(
+      req.file.path
+    );
+    const { title, description, userID } = req.body;
+    console.log(userID)
 
-    // Upload the file to Cloudinary as a video, allowing all video types
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      resource_type: 'video', // Specify that the file is a video
-      folder: 'uploads/videos', // Optional folder for videos
-    }).catch((err) => {
-      throw new Error('Cloudinary upload failed: ' + err.message);
+    const uploadedBy=userID
+    
+
+    // Create a new video model instance
+    const video = new VideoModel({
+      title,
+      description,
+      secure_url,
+      public_id,
+      message,
+      uploadedBy,
     });
 
-    // Send response with the file details
-    res.status(200).json({
-      message: 'Video uploaded successfully',
-      secure_url: result.secure_url,   // The URL of the uploaded video
-      public_id: result.public_id,
-    });
+    // Save the video details
+    await video.save();
+    return res.status(200).send("Video details saved successfully.");
   } catch (error) {
-    res.status(500).send('Error uploading video: ' + error.message);
-    console.log(error);
+    res.status(500).send("Error uploading video: " + error.message);
+    console.error(error); // Use console.error for errors
   }
 };
 

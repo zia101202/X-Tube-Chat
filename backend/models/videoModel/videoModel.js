@@ -9,13 +9,19 @@ const videoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  url: {
+  secure_url: {
     type: String,
     required: true,
   },
+  public_id: {
+    type: String,
+    required: true,
+  },
+  message: {
+    type: String,
+  },
   tags: {
     type: [String],
-    required: true,
   },
   uploadedBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -26,24 +32,27 @@ const videoSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
-  dislikes: {
-    type: Number,
-    default: 0,
-  },
-  comments: [
+  likes: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comment',
+      ref: 'User',
+    },
+  ],
+  dislikes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
   ],
   uploadDate: {
     type: Date,
     default: Date.now,
   },
+  comment:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment',
+  },
+  
 });
 
 const Video = mongoose.model('Video', videoSchema);
