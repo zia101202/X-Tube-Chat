@@ -12,8 +12,18 @@ const ReplySchema = new mongoose.Schema({
     required: true,
   },
   content: { type: String, required: true },
-  likes: { type: Number, default: 0 },
-  dislikes: { type: Number, default: 0 },
+  dislikes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
+ likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
   createdAt: { type: Date, default: Date.now },
 });
 
@@ -30,8 +40,20 @@ const CommentSchema = new mongoose.Schema({
     required: true,
   },
   content: { type: String, required: true },
-  likes: { type: Number, default: 0 },
-  dislikes: { type: Number, default: 0 },
+
+  dislikes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
+ likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
+
   replies: [{type:mongoose.Schema.ObjectId,ref:"ReplyComment"}],
   createdAt: { type: Date, default: Date.now },
 });

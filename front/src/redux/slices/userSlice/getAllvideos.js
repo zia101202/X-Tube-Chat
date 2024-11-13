@@ -13,7 +13,7 @@ const GetAllVideosSlice = createSlice({
     name: 'GetAllVideosSlice',
     initialState: {
       value: 0,
-      data: null,
+      data: [],
       status: 'idle', 
       error: null,
     },

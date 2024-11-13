@@ -41,7 +41,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/play" element={<Play />} />
+          <Route path="/play/:id" element={<Play />} />
         </Routes>
       </Router>
       <Upload />

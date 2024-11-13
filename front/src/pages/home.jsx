@@ -3,6 +3,9 @@ import SidebarComponent from '../components/sidebar/sidebar'
 import VideoPlayer from '../components/videoCard/videoCard'
 import { Button } from "@nextui-org/react";
 import GetUsersVideo from '../components/getUsersVideo/getUsersVideo.jsx'
+import PaymentForm from '../components/payment/payment.jsx';
+import WatchLater from '../components/watchLater/watchLater.jsx';
+import Playlist from "../components/playlist/playList.jsx";
 function Home() {
     return (
 
@@ -11,7 +14,9 @@ function Home() {
                 <SidebarComponent />
              <GetUsersVideo/>
             </div>
-           
+           <PaymentForm/>
+           <WatchLater />
+           <Playlist/>
         </>
 
     )

@@ -25,15 +25,22 @@ const likeVideo = async (req, res) => {
 
     // Find the video by ID
     const video = await Video.findById(id);
-
+console.log(video)
+console.log(userId)
+console.log(id)
     // If the user already liked the video, remove the like
     if (video.likes.includes(userId)) {
+      console.log('like')
+      console.log(video.likes = video.likes.filter(id => id.toString() !== userId.toString()))
       video.likes = video.likes.filter(id => id.toString() !== userId.toString());
     } else {
       // If the user has disliked the video, remove the dislike first
+      console.log('dislike')
+      console.log(video.dislikes.filter(id => id.toString() !== userId.toString()))
       video.dislikes = video.dislikes.filter(id => id.toString() !== userId.toString());
-      // Add the like
+      console.log('dislike3')
       video.likes.push(userId);
+      console.log('dislike4vv')
     }
 
     await video.save();

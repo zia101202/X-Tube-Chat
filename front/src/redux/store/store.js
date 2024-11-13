@@ -7,6 +7,14 @@ import LikeVideo  from '../slices/userSlice/likeDislike'
 import commentSlice  from '../slices/userSlice/comment'
 import getCommentSlice  from '../slices/userSlice/getComment'
 import replyComment  from '../slices/userSlice/replyComment'
+import  selecedVideoSlice  from '../slices/userSlice/selectedVideo'
+import     LikeDislikeComment from '../slices/userSlice/likeDislikeComment'
+import LikeDislikeReplyComment from '../slices/userSlice/likeDislikeReplyComment'
+import watchLaterVideo from '../slices/userSlice/watchLater'
+import getWatchLater from '../slices/userSlice/getWatchLater'
+import  createPlaylistSlice from '../slices/userSlice/getWatchLater'
+import  getPlaylist from '../slices/userSlice/getWatchLater'
+ 
 const store = configureStore({
   reducer: {
     userSlice: userSlice,
@@ -15,7 +23,14 @@ const store = configureStore({
     LikeVideo:LikeVideo,
     commentSlice:commentSlice,
     getCommentSlice,
-    replyComment
+    replyComment,
+    selecedVideoSlice,
+    LikeDislikeComment,
+    LikeDislikeReplyComment,
+    watchLaterVideo,
+    getWatchLater,
+    createPlaylistSlice,
+    getPlaylist
   },
 });
 

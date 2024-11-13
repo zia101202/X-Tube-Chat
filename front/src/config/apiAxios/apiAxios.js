@@ -17,6 +17,8 @@ export const getData = async (endpoint) => {
 };
 
 export const getDatabyProperty = async ({endpoint,params} ) => {
+  console.log(endpoint)
+  console.log(params)
   try {
     const response = await api.get(endpoint, {params}  );
     return response.data;

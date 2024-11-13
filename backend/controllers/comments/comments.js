@@ -1,14 +1,11 @@
 const {Comment,ReplyComment} = require('../../models/commentsModel/commentsModel'); // Adjust the path as necessary
 
 const createComment = async (req, res) => {
-  const { userId, videoId, content,likes,dislikes } = req.body; // Expecting these values in the request body
+  const { userID, videoId, content,likes,dislikes } = req.body; // Expecting these values in the request body
 
-  console.log(userId)
-  console.log(videoId)
-  console.log(content)
   try {
     const comment = new Comment({
-      user: userId,
+      user: userID,
       video: videoId,
       content,
       likes,
@@ -23,13 +20,57 @@ const createComment = async (req, res) => {
 };
 
 
+const likeComment = async (req, res) => {
+  try {
+   
+    const {userID ,commentId} = req.body;  
+    const OneComment = await Comment.findById(commentId);
+    if (OneComment.likes.includes(userID)) {
+       OneComment.likes = OneComment.likes.filter(id => id.toString() !== userID.toString());
+    } else {
+      OneComment.dislikes = OneComment.dislikes.filter(id => id.toString() !== userID.toString());
+      OneComment.likes.push(userID);
+    }
+    await OneComment.save();
+    res.status(200).json({ message: 'Like status updated', OneComment });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update like' });
+  }
+};
+
+// Function to dislike a video
+const dislikeComment = async (req, res) => {
+  try {
+  
+    const {userID ,commentId} = req.body;   
+ 
+    const OneComment = await Comment.findById(commentId);
+
+
+    if (OneComment.dislikes.includes(userID)) {
+      OneComment.dislikes = OneComment.dislikes.filter(id => id.toString() !== userID.toString());
+    } else {
+      OneComment.likes = OneComment.likes.filter(id => id.toString() !== userID.toString());
+      OneComment.dislikes.push(userID);
+      
+    }
+    await OneComment.save();
+   
+    res.status(200).json({ message: 'Dislike status updated', OneComment  });
+    
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update dislike' });
+  }
+};
+
+
 
 const replyComment = async (req, res) => {
-  const { userId,  commentId, content,likes,dislikes } = req.body; // Expecting these values in the request body
+  const { userID,  commentId, content,likes,dislikes } = req.body; // Expecting these values in the request body
 
   try{
     
-    const Reply = new ReplyComment({ userId,  commentId, content,likes,dislikes });
+    const Reply = new ReplyComment({ userID,  commentId, content,likes,dislikes });
     await Reply.save();
   
   const comment = await Comment.findById(commentId);
@@ -42,14 +83,61 @@ const replyComment = async (req, res) => {
   }
 };
 
+const likeReplyComment = async (req, res) => {
+  try {
+   
+    const {userID ,commentId} = req.body; 
+  
+    console.log(userID) 
+    console.log(commentId)
+    const OneComment = await ReplyComment.findById(commentId);
+    if (OneComment.likes.includes(userID)) {
+       OneComment.likes = OneComment.likes.filter(id => id.toString() !== userID.toString());
+    } else {
+      OneComment.dislikes = OneComment.dislikes.filter(id => id.toString() !== userID.toString());
+      OneComment.likes.push(userID);
+    }
+    await OneComment.save();
+    res.status(200).json({ message: 'Like status updated', OneComment });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update like' });
+  }
+};
+
+// Function to dislike a video
+const dislikeReplyComment = async (req, res) => {
+  try {
+  
+    const {userID ,commentId} = req.body;   
+ 
+    const OneComment = await ReplyComment.findById(commentId);
+    console.log(OneComment)
+
+    if (OneComment.dislikes.includes(userID)) {
+      OneComment.dislikes = OneComment.dislikes.filter(id => id.toString() !== userID.toString());
+    } else {
+      OneComment.likes = OneComment.likes.filter(id => id.toString() !== userID.toString());
+      OneComment.dislikes.push(userID);
+     }
+    await OneComment.save();
+    res.status(200).json({ message: 'Dislike status updated', OneComment  });
+    
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update dislike' });
+  }
+};
+
+
+
+
 
 // Get all comments for a specific video
 const getCommentsByVideo = async (req, res) => {
   const { videoId } = req.params; // Video ID from the request parameters
-console.log(videoId)
+
   try {
-    const comments = await Comment.find({ video: videoId }).populate('replies'); 
-  console.log(comments)
+    const comments = await Comment.find({ video: videoId }).populate({path:'replies', populate:{path:'userID'}});
+  
     res.status(200).json({ success: true, comments });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -96,4 +184,4 @@ const deleteComment = async (req, res) => {
 };
 
 
-module.exports = {createComment, getCommentsByVideo , updateComment, deleteComment ,replyComment};
+module.exports = {createComment, getCommentsByVideo , updateComment, deleteComment ,replyComment,likeComment,dislikeComment,dislikeReplyComment,likeReplyComment};

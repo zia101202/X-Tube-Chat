@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const userRoutes=require('./routes/users/user')
 const videoRoutes=require('./routes/video/video')
 const commentsRoutes=require('./routes/comments/comments')
+const watchLaterRouter=require('./routes/playList/playList')
 const db = require("./config/mongoDb/mongoDb");
 
 db();
@@ -19,6 +20,7 @@ app.use('/api/users', userRoutes);
 app.use("/api", uploadRoute);
 app.use("/video", videoRoutes);
 app.use("/comments", commentsRoutes);
+app.use("/personal", watchLaterRouter);
 
 app.use(bodyParser.json());
 app.get("/", (req, res) => {
