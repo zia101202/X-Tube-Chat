@@ -8,13 +8,16 @@ const videoRoutes=require('./routes/video/video')
 const commentsRoutes=require('./routes/comments/comments')
 const watchLaterRouter=require('./routes/playList/playList')
 const db = require("./config/mongoDb/mongoDb");
-
+const http = require('http');
+const server = http.createServer(app);
+const {initSocket}=  require('./chat/chat')
 db();
+
+initSocket(server)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-
 
 app.use('/api/users', userRoutes);
 app.use("/api", uploadRoute);
@@ -28,7 +31,9 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Video Upload API"); // Homepage route for testing purposes
 });
 
+
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

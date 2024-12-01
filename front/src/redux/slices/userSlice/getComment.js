@@ -1,7 +1,7 @@
 import { getData } from '../../../config/apiAxios/apiAxios'; // Adjust the import path as necessary
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // Define your async thunk
-export const getComment = createAsyncThunk('getCommentSlice/createData', async (id) => {
+export const getComment = createAsyncThunk('getCommentSlice/GetComment', async (id) => {
     
   const response = await getData(`/comments/get/${id}`);
   return response; // return the data from the API

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { createData  } from '../../../config/apiAxios/apiAxios'; // Adjust the import path as necessary
 
 // Define your async thunk
-export const watchLater = createAsyncThunk('userSlice/createData', async ({userId, videoId}) => {
+export const watchLater = createAsyncThunk('watchLaterSlice/watchLater', async ({userId, videoId}) => {
     console.log(userId)          
     console.log(videoId)
 const response = await createData  ({ endpoint: `/personal/watchLater`,data:{userId,videoId}  });

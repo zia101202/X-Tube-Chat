@@ -21,6 +21,7 @@ const userSlice = createSlice({
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.status = 'succeeded'; // Update status to succeeded
+        console.log(action.payload)
         state.userID = action.payload?.user?._id; // Assuming userId is returned from the API
       })
       .addCase(createUser.rejected, (state, action) => {

@@ -2,11 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { createData  } from '../../../config/apiAxios/apiAxios'; // Adjust the import path as necessary
 
 // Define your async thunk
-export const createPlaylist = createAsyncThunk('userSlice/createData', async ({userId, videoId,title}) => {
-    console.log(userId)          
-    console.log(videoId)
-  
-const response = await createData  ({ endpoint: `/personal/createPlaylist`,data:{userId,videoId,title}  });
+export const createPlaylist = createAsyncThunk('CreatePLaylist/Playlist', async ({userId, videoId,title}) => {
+   const response = await createData  ({ endpoint: `/personal/createPlaylist`,data:{userId,videoId,title}  });
   return response; // return the data from the API
 });
 

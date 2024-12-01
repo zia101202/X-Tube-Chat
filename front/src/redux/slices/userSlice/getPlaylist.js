@@ -6,31 +6,32 @@ import { getDatabyProperty } from '../../../config/apiAxios/apiAxios';
 export const getPlaylistVideos = createAsyncThunk('getPlaylistVideos/videos', async ({endpoint,params}) => {
 
     const response = await getDatabyProperty( {endpoint,params});
+    console.log(response)
     return response; // return the data from the API
   });
   
-
+console.log(getPlaylistVideos )
 const getPlaylist = createSlice({
     name: 'getPlaylist',
     initialState: {
        
-        Playlistdata:null,
-         Playliststatus: 'idle', 
-         Playlisterror: null,
+        getPlaylistdata:null,
+         getPlayliststatus: 'idle', 
+         getPlaylisterror: null,
     },
  
     extraReducers: (builder) => {
       builder
         .addCase(getPlaylistVideos.pending, (state) => {
-          state. Playliststatus = 'loading'; // Update status to loading
+          state.getPlayliststatus = 'loading'; // Update status to loading
         })
         .addCase(getPlaylistVideos.fulfilled, (state, action) => {
-          state. Playliststatus = 'succeeded';
-          state.Playlistdata = action.payload;
+          state.getPlayliststatus = 'succeeded';
+          state.getPlaylistdata = action.payload;
         })
         .addCase(getPlaylistVideos.rejected, (state, action) => {
-          state. Playliststatus = 'failed'; // Update status to failed
-          state. Playlisterror = action.error.message; // Store the error message
+          state.getPlayliststatus = 'failed'; // Update status to failed
+          state.getPlaylisterror = action.error.message; // Store the error message
         });
     },
   });

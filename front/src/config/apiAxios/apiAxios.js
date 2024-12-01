@@ -6,7 +6,7 @@ const api = axios.create({
 
 // Function to get data (Read)
 export const getData = async (endpoint) => {
-  console.log(endpoint)
+
   try {
     const response = await api.get(endpoint);
     return response.data;
@@ -17,8 +17,7 @@ export const getData = async (endpoint) => {
 };
 
 export const getDatabyProperty = async ({endpoint,params} ) => {
-  console.log(endpoint)
-  console.log(params)
+ 
   try {
     const response = await api.get(endpoint, {params}  );
     return response.data;
@@ -34,6 +33,7 @@ export const getDatabyProperty = async ({endpoint,params} ) => {
 export const createData = async ({ endpoint, data }) => {
   try {
     const response = await api.post(endpoint, data);
+    console.log(response)
     return response.data; // Return the response data
   } catch (error) {
     console.error("Error creating data:", error.response?.data?.message || error.message);
@@ -43,7 +43,7 @@ export const createData = async ({ endpoint, data }) => {
 
 export const createDataPartially = async ({ endpoint, userID }) => {
   try {
-    console.log(userID)
+   
     const response = await api.patch(endpoint, {
       userID:userID
     });

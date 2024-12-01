@@ -35,7 +35,7 @@ export default function GetComment() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getComment(id));
-  }, [likeDislikeCommentStatus]);
+  }, [likeDislikeCommentStatus,likeDislikeReplyCommentStatus]);
 
   const handleReply = (id) => {
     setCommentId(id);
@@ -59,10 +59,17 @@ export default function GetComment() {
 
   const handleReplyLikeComment = ({ id, user, like }) => {
     dispatch(ReplyCommentLike({ id, user, like }));
-    console.log(id)
-    console.log(user)
+   
   };
+  
+  console.log(replyCommentsStatus)
+  if(likeDislikeReplyCommentStatus=='loading'){
+    return <>loading....</>
+  }
 
+  console.log( likeDislikeReplyComment)
+  console.log(likeDislikeReplyCommentStatus)
+  console.log(likeDislikeReplyCommentError)
   return (
     <div>
       {comment?.comments?.map((element) => (
@@ -98,7 +105,7 @@ export default function GetComment() {
                 onClick={() =>
                   handleLikeComment({
                     id: element._id,
-                    user: element.user,
+                    user: userID,
                     like: "dislike",
                   })
                 }
@@ -142,7 +149,7 @@ export default function GetComment() {
                   onClick={() =>
                     handleReplyLikeComment({
                       id: reply._id,
-                      user: reply.userId._id,
+                      user: userID,
                       like: "like",
                     })
                   }
@@ -156,7 +163,7 @@ export default function GetComment() {
                   onClick={() =>
                     handleReplyLikeComment({
                       id: reply._id,
-                      user: reply.userId._id,
+                      user: userID,
                       like: "dislike",
                     })
                   }

@@ -14,6 +14,7 @@ const CommentSection = () => {
   const location = useLocation();
   const video = location.state?.video;
   const handleAddComment = () => {
+    console.log(userID)
     dispatch(
       createComment({ userId: userID, videoId: video._id, content: newComment })
     );

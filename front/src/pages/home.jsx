@@ -6,6 +6,7 @@ import GetUsersVideo from '../components/getUsersVideo/getUsersVideo.jsx'
 import PaymentForm from '../components/payment/payment.jsx';
 import WatchLater from '../components/watchLater/watchLater.jsx';
 import Playlist from "../components/playlist/playList.jsx";
+
 function Home() {
     return (
 
@@ -15,8 +16,8 @@ function Home() {
              <GetUsersVideo/>
             </div>
            <PaymentForm/>
-           <WatchLater />
-           <Playlist/>
+          
+
         </>
 
     )

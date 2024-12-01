@@ -50,13 +50,13 @@ const GetUsersVideo = () => {
             return (
               <div
                 key={video._id}
-                className="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer"
-                onClick={() => handleVideoClick(video)} // navigate to play video
+                className="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer  "
+                onClick={() => handleVideoClick(video)}
+               // navigate to play video
               >
                 <VideoPlayer
                   publicId={video.public_id}
-                  width="300px"
-                  className="w-full h-48"
+                 
                 />
                 <div className="p-4">
                   <h2 className="font-semibold text-lg">{video.title}</h2>

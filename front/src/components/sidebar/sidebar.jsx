@@ -17,6 +17,7 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { useAuth0 } from '@auth0/auth0-react';
+
 const SidebarComponent = () => {
     // State to manage sidebar collapse
     const [collapsed, setCollapsed] = useState(false);
@@ -54,16 +55,23 @@ const SidebarComponent = () => {
                         <MenuItem icon={<SavingsRoundedIcon />}>Savings Wallet</MenuItem>
                     </SubMenu>
                     <MenuItem
-                        component={<Link to="transactions" className="link" />}
+                        component={<Link to="WatchLater" className="link" />}
                         icon={<MonetizationOnRoundedIcon />}
                     >
-                        Transactions
+                        WatchLater
                     </MenuItem>
-                    <SubMenu label="Settings" icon={<SettingsApplicationsRoundedIcon />}>
-                        <MenuItem icon={<AccountCircleRoundedIcon />}>Account</MenuItem>
-                        <MenuItem icon={<ShieldRoundedIcon />}>Privacy</MenuItem>
-                        <MenuItem icon={<NotificationsRoundedIcon />}>Notifications</MenuItem>
-                    </SubMenu>
+                    <MenuItem
+                        component={<Link to="Upload" className="link" />}
+                        icon={<MonetizationOnRoundedIcon />}
+                    >
+                        Upload
+                    </MenuItem>
+                    <MenuItem
+                        component={<Link to="Getplaylist" className="link" />}
+                        icon={<MonetizationOnRoundedIcon />}
+                    >
+                        PlayList
+                    </MenuItem>
                     
                     
                     {isAuthenticated && (

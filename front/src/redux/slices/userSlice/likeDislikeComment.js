@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { createData  } from '../../../config/apiAxios/apiAxios'; // Adjust the import path as necessary
 
 // Define your async thunk
-export const CommentLike = createAsyncThunk('userSlice/createData', async ({id,like, user}) => {
+export const CommentLike = createAsyncThunk('likeDislikeComment', async ({id,like, user}) => {
     console.log(id)
     console.log(like)
     console.log(user)

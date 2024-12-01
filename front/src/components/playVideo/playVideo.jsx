@@ -7,32 +7,40 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import { LikeVideo } from "../../redux/slices/userSlice/likeDislike";
 import CommentSection from "../comment/comment";
-import { watchLater } from "../../redux/slices/userSlice/watchLater";
+
 import { useParams } from "react-router-dom";
+
+import ShowplayListWithvideo from '../playlist/showPlaylistWithVideo'
 const Play = () => {
   const [expandedDescriptions, setExpandedDescriptions] = useState(false);
-  const [filtervideo, setfiltervideo] = useState();
+  const [filtervideo, setfiltervideo] = useState(null);
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.GetAllVideosSlice);
+  const { data, status: videoStatus } = useSelector((state) => state.GetAllVideosSlice);
   const { userID, status, error } = useSelector((state) => state.userSlice);
   const { likeDislikeData, likeDislikeDataStatus, likeDislikeDataError } =
     useSelector((state) => state.LikeVideo);
-  const { watchLaterVideo, watchLaterVideoStatus, watchLaterVideoError } =
-    useSelector((state) => state.watchLaterVideo);
+  
   
   const location = useLocation();
   const video = location.state?.video;
 
   const { id } = useParams();
+  console.log(id)
   useEffect(() => {
-    setfiltervideo(data?.filter((element) => element._id === video?._id));
-  }, [data, video]);
+    if(data){
+      console.log(data)
+  
+    setfiltervideo(data.filter((element) => element._id ===  id));
+    }
+   
+  }, [data, video,videoStatus]);
 
   const toggleDescription = () => {
     setExpandedDescriptions(!expandedDescriptions);
   };
 
   const handleLike = () => {
+
     dispatch(
       LikeVideo({
         videoid: video._id,
@@ -43,6 +51,7 @@ const Play = () => {
   };
 
   const handleDislike = () => {
+    
     dispatch(
       LikeVideo({ videoid: video._id, like: "dislike", userId: userID })
     );
@@ -58,15 +67,11 @@ const Play = () => {
     return <p>No video data available</p>;
   }
 
-  const handleWatchLater = () => {
-    console.log("hihih");
-    dispatch(watchLater({ userId: userID, videoId: id }));
-  };
-
-  console.log(watchLaterVideo);
-  console.log(watchLaterVideoStatus);
+console.log(filtervideo)
   return (
     <>
+    {
+      filtervideo.length>0 ?  (<>  
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">User Videos</h1>
         {status === "loading" && <p className="text-center">Loading...</p>}
@@ -75,12 +80,14 @@ const Play = () => {
             Error: {error?.message || error}
           </p>
         )}
+<div className=" max-w-[800px] max-h-[1000px] ">
 
-        <VideoPlayer
+<VideoPlayer 
           publicId={filtervideo[0]?.public_id}
-          width="300px"
-          className="w-full h-48"
-        />
+          />
+</div>
+   
+     <ShowplayListWithvideo/>
         <div className="p-4">
           <h2 className="font-semibold text-lg">{filtervideo[0]?.title}</h2>
           <p className="text-gray-600">
@@ -137,9 +144,14 @@ const Play = () => {
           </div>
         </div>
       </div>
-      <div>{status}</div>
-      <div onClick={() => handleWatchLater()}>watchLater</div>
-      <CommentSection />
+     
+      
+      <CommentSection /></>
+    ):(<>loading......</>) 
+
+    
+    }
+ 
     </>
   );
 };
