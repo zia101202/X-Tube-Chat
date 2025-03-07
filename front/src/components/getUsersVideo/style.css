@@ -1,0 +1,25 @@
+.videosHome {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Default: 1 column */
+    gap: 16px; /* Equivalent to gap-4 (16px) */
+  }
+  
+  /* When screen width is 668px or more */
+  @media (min-width: 668px) {
+    .videosHome {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    }
+  }
+  
+  /* When screen width is 900px or more */
+  @media (min-width: 900px) {
+    .videosHome {
+      grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    }
+  }
+  
+  @media (min-width: 1000px) {
+    .videosHome {
+      grid-template-columns: repeat(4, 1fr); /* 3 columns */
+    }
+  }

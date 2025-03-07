@@ -3,9 +3,7 @@ import { createData  } from '../../../config/apiAxios/apiAxios'; // Adjust the i
 
 // Define your async thunk
 export const watchLater = createAsyncThunk('watchLaterSlice/watchLater', async ({userId, videoId}) => {
-    console.log(userId)          
-    console.log(videoId)
-const response = await createData  ({ endpoint: `/personal/watchLater`,data:{userId,videoId}  });
+ const response = await createData  ({ endpoint: `/personal/watchLater`,data:{userId,videoId}  });
   return response; // return the data from the API
 });
 

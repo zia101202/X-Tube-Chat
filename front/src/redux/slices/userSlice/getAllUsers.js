@@ -4,7 +4,7 @@ import { getData } from '../../../config/apiAxios/apiAxios';
 // Correct usage of createAsyncThunk
 export const getAllUsers = createAsyncThunk('GetAllRegisterUser', async (endpoint) => {
   const response = await getData(  endpoint);
-  console.log(response)
+ 
   return response;
 });
 

@@ -1,85 +1,67 @@
 const User = require("../../models/userModel/userModel");
-
-exports.createUser = async (req, res) => {
-  const { userId, email, name, nickname, picture, sub, updated_at } = req.body;
-
+const fs = require("fs");
+const {
+  uploadPhotoToCloudinary,
+} = require("../uploadCloudinary/uploadCloudinary");
+const updateUser = async (req, res) => {
   try {
-    let user = await User.findOne({ userId });
+    const userId = req.session.user_Id;
 
-   if(user){
-    return res.status(201).json({ message: "already Exists", user });
-   }
+    if (!userId) {
+      return res.status(400).json({ error: "User ID is missing ❌" });
+    }
+    const { secure_url, public_id, message } = await uploadPhotoToCloudinary(
+      req.file.path
+    );
 
-    user = new User({
-      userId,
-      email,
-      name,
-      nickname,
-      picture,
-      sub,
-      updated_at,
+    const filePath = req.file.path;
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error("Failed to delete local file ⚠️:", err);
+      } else {
+        console.log("Local file deleted successfully ✅");
+      }
     });
 
-   
-    console.log(await user.save())
-    return res.status(201).json({ message: "User created successfully", user }); // 201 Created
+    const { nickname, dob, education, resident, bio } = req.body;
+
+    // Find and update the user
+    const updatedUser = await User.findByIdAndUpdate(
+      userId, // Correct way to pass ID
+      { nickname, picture: secure_url, dob, education, resident, bio }, // Updated fields
+      { new: true, runValidators: true } // Return updated document & validate
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found ❌" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "User updated successfully ✅", user: updatedUser });
   } catch (error) {
-    return res.status(500).json({ message: 'userID zia177 Error' });
+    console.error("Error updating user ⚠️:", error);
+    res.status(500).json({ error: "Internal Server Error ❌" });
   }
 };
 
-exports.getAllUsers = async (req, res) => {
+
+const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(200).json({users });
+    const users = await User.find(); // Fetch all users from the database
+    res.status(200).json({
+       users,
+    }); // Send users as JSON response
   } catch (error) {
-    res.status(500).json({ message: error });
+    console.error("Error fetching users:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error: Unable to fetch users.",
+      error: error.message,
+    }); // Send error response
   }
 };
 
-// Get a user by ID
-exports.getUserById = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: 'userID zia1 Error' });
-  }
-};
 
-exports.getUserByProperty = async (req, res) => {
-  console.log(req.query.userId)
-  try {
-    
-    const user = await User.findOne(req.query);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: 'userID zia2 Error' });
-  }
-};
 
-// Update a user by ID
-exports.updateUser = async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Delete a user by ID
-exports.deleteUser = async (req, res) => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json({ message: "User deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+module.exports = { updateUser,getAllUsers };

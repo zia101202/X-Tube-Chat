@@ -1,16 +1,16 @@
 // src/slices/someSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getDatabyProperty } from '../../../config/apiAxios/apiAxios';
-// Define your async thunk
+
 
 export const getPlaylistVideos = createAsyncThunk('getPlaylistVideos/videos', async ({endpoint,params}) => {
 
     const response = await getDatabyProperty( {endpoint,params});
-    console.log(response)
-    return response; // return the data from the API
+  
+    return response; 
   });
   
-console.log(getPlaylistVideos )
+
 const getPlaylist = createSlice({
     name: 'getPlaylist',
     initialState: {

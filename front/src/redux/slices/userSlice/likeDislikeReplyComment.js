@@ -3,9 +3,7 @@ import { createData  } from '../../../config/apiAxios/apiAxios'; // Adjust the i
 
 // Define your async thunk
 export const ReplyCommentLike = createAsyncThunk('ReplyCommentLike/likeDislikeCommentReply', async ({id,like, user}) => {
-    console.log(id)
-    console.log(like)          
-    console.log(user)
+   
 const response = await createData  ({ endpoint: `/comments/${like}ReplyComment`,data:{userID:user,commentId:id}  });
   return response; // return the data from the API
 });

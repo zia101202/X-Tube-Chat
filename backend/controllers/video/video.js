@@ -16,8 +16,11 @@ const getAllVideos = async (req, res) => {
 // Function to like a video
 const likeVideo = async (req, res) => {
   try {
+
+    
+console.log(req.session.user_Id);
     const { id } = req.params;
-    const userId = req.body.userID;
+    const userId = req.session.user_Id;
 
     if (id == null || userId == null) {
       return res.status(400).json({ message: " user or video ID not define" });
@@ -52,7 +55,8 @@ const dislikeVideo = async (req, res) => {
   try {
     // Assuming req.user contains the authenticated user's info
     const { id } = req.params;
-    const userId = req.body.userID;
+   
+    const userId = req.session.user_Id
     // Find the video by ID
     if (id == null || userId == null) {
       return res.status(400).json({ message: " user or video ID not define" });

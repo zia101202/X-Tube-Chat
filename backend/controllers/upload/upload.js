@@ -1,4 +1,4 @@
-// Your current file (e.g., uploadController.js)
+const fs = require("fs");
 const {
   uploadVideoToCloudinary,
 } = require("../uploadCloudinary/uploadCloudinary"); // Adjust the path as necessary
@@ -6,7 +6,7 @@ const VideoModel = require("../../models/videoModel/videoModel"); // Capitalized
 const UserModel = require("../../models/userModel/userModel"); // Assuming you have a user model
 
 const uploadFile = async (req, res) => {
-
+console.log('thisi s8888888888888888888888888888888');
   try {
     // Check if file is provided
     if (!req.file) {
@@ -17,11 +17,19 @@ const uploadFile = async (req, res) => {
     const { secure_url, public_id, message } = await uploadVideoToCloudinary(
       req.file.path
     );
+console.log( req.file);
+      const filePath = req.file.path;
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error("Failed to delete local file ⚠️:", err);
+          } else {
+            console.log("Local file deleted successfully ✅");
+          }
+        });
     const { title, description, userID } = req.body;
-    console.log(userID)
-
-    const uploadedBy=userID
     
+    const uploadedBy=req.session.user_Id
+    console.log(uploadedBy);
 
     // Create a new video model instance
     const video = new VideoModel({
@@ -31,6 +39,7 @@ const uploadFile = async (req, res) => {
       public_id,
       message,
       uploadedBy,
+     type: req.file.mimetype
     });
 
     // Save the video details

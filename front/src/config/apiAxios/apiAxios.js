@@ -2,6 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_UR,
+  withCredentials: true,
 });
 
 // Function to get data (Read)
@@ -19,6 +20,7 @@ export const getData = async (endpoint) => {
 export const getDatabyProperty = async ({endpoint,params} ) => {
  
   try {
+   
     const response = await api.get(endpoint, {params}  );
     return response.data;
   } catch (error) {
@@ -33,7 +35,7 @@ export const getDatabyProperty = async ({endpoint,params} ) => {
 export const createData = async ({ endpoint, data }) => {
   try {
     const response = await api.post(endpoint, data);
-    console.log(response)
+    
     return response.data; // Return the response data
   } catch (error) {
     console.error("Error creating data:", error.response?.data?.message || error.message);
@@ -41,6 +43,18 @@ export const createData = async ({ endpoint, data }) => {
   }
 };
 
+
+export const createDataWithImagesFun = async ({ endpoint,formData }) => {
+  console.log(formData.get("groupImage"))
+  try {
+    const response = await api.post(endpoint,formData);
+ 
+    return response.data; // Return the response data
+  } catch (error) {
+    console.error("Error creating data:", error.response?.data?.message || error.message);
+    throw new Error(error.response?.data?.message || 'Error creating data'); // Throw the error to be caught in the thunk
+  }
+};
 export const createDataPartially = async ({ endpoint, userID }) => {
   try {
    

@@ -3,9 +3,9 @@ import { createDataPartially } from '../../../config/apiAxios/apiAxios'; // Adju
 
 // Define your async thunk
 export const LikeVideo = createAsyncThunk('LikeDislikeVideo', async ({videoid,like, userId}) => {
-  console.log(like)
+
 const response = await createDataPartially({ endpoint: `/video/${videoid}/${like}`, userID: userId });
-console.log(response)
+
   return response; // return the data from the API
 });
 

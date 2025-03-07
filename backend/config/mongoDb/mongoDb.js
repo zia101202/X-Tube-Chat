@@ -13,7 +13,7 @@ const db=async=()=>{
         useUnifiedTopology: true
     })
     .then(() => {
-        console.log('MongoDB connected successfully!');
+        ('MongoDB connected successfully!');
     })
     .catch((err) => {
         console.error('MongoDB connection error:', err);

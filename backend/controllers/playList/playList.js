@@ -1,11 +1,15 @@
 const WatchLater = require("../../models/watchLater/watchLater");
 const Playlist = require("../../models/playlistModel/playlistModel");
 const watchLaterController = async (req, res) => {
+  console.log('watch later');
   try {
-    const { userId, videoId } = req.body;
+    const { videoId } = req.body;
+    const userId = req.session.user_Id
+    console.log(videoId);
+    console.log(userId);
     const user = await WatchLater.findOne({ userId });
     if (user && user.videoId.includes(videoId)) {
-      return res.status(501).json({ message: "already Exists" });
+      return res.status(409).json({ message: "already Exists" });
     } else if (user) {
       user.videoId.push(videoId);
       await user.save();
@@ -16,34 +20,38 @@ const watchLaterController = async (req, res) => {
 
     res.status(201).json({ message: "successful" });
   } catch (error) {
-    console.log(error)
+console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
 
 const getWatchLaterController = async (req, res) => {
-  try {
-    const { userId } = req.query;
 
+
+  try {
+   
+    const userId = req.session.user_Id
+    console.log(userId);
     const watchlist = await WatchLater.findOne({ userId: userId })
-      .populate("userId") // Populates the `userId` field with User data
-      .populate("videoId"); // Populat
+      .populate("userId") 
+      .populate("videoId"); 
 
     res.status(201).json({ message: "successful", watchlist });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
 
 const createPlaylistController = async (req, res) => {
+  console.log('play');
   try {
-    const { userId, videoId, title } = req.body;
-  console.log(userId)
-  console.log(videoId)
-  console.log(title)
+    const {  videoId, title } = req.body;
+
+    const userId = req.session.user_Id
     let playlist = await Playlist.find({ title: title, user: userId });
    
-    if (!playlist) {
+    if (playlist.length===0) {
       const createPlaylist = new Playlist({
         title: title,
         user: userId,
@@ -53,8 +61,8 @@ const createPlaylistController = async (req, res) => {
       playlist = await createPlaylist.save();
       return res.status(201).json({ message: "Playlist created", playlist });
     }
-console.log(playlist)
-    if (playlist[0].videos.includes(videoId)) {
+
+    if (playlist[0]?.videos?.includes(videoId)) {
       return res
         .status(409)
         .json({ message: "Video already exists in playlist" });
@@ -66,19 +74,24 @@ console.log(playlist)
       .status(201)
       .json({ message: "Added to playlist successfully", playlist });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
 const getPlaylistController = async (req, res) => {
+  console.log('playlistget');
   try {
-    const { userId } = req.query;
+   
+    const userId = req.session.user_Id
+    console.log(userId);
   const playlist = await Playlist.find({ user: userId })
       .populate({path:'videos'}) 
-console.log(playlist)
+console.log(playlist);
     res.status(201).json({ message: "successful", playlist });
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    res.status(501).json({ message: error });
+    
   }
 };
 module.exports = {

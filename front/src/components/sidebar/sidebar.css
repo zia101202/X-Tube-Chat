@@ -1,0 +1,25 @@
+/* Default Sidebar Styles */
+.sidebar-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Light Mode (Default) */
+.pro-sidebar {
+    background-color: #ffffff !important;
+    color: #333 !important;
+}
+
+/* Dark Mode */
+.dark-mode .pro-sidebar {
+    background-color: #222 !important;
+    color: #fff !important;
+}
+
+.dark-mode .pro-menu-item {
+    color: #ddd !important;
+}
+
+.dark-mode .pro-menu-item:hover {
+    background-color: #444 !important;
+}

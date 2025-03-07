@@ -8,13 +8,17 @@ import commentSlice  from '../slices/userSlice/comment'
 import getCommentSlice  from '../slices/userSlice/getComment'
 import replyComment  from '../slices/userSlice/replyComment'
 import  selecedVideoSlice  from '../slices/userSlice/selectedVideo'
-import     LikeDislikeComment from '../slices/userSlice/likeDislikeComment'
+import  LikeDislikeComment from '../slices/userSlice/likeDislikeComment'
 import LikeDislikeReplyComment from '../slices/userSlice/likeDislikeReplyComment'
 import watchLaterVideo from '../slices/userSlice/watchLater'
 import getWatchLater from '../slices/userSlice/getWatchLater'
 import  createPlaylistSlice from '../slices/userSlice/createPlaylist'
 import  getPlaylist from '../slices/userSlice/getPlaylist'
 import  GetAllUserDataSlice from '../slices/userSlice/getAllUsers'
+import  ChatDataSlice from '../slices/userSlice/getChat'
+import groupSlice from  '../slices/userSlice/createGroup'
+import registrationSlice from '../slices/userSlice/registration'
+import darkModelSlice from '../slices/userSlice/darkModel'
 const store = configureStore({
   reducer: {
     userSlice: userSlice,
@@ -31,7 +35,12 @@ const store = configureStore({
     getWatchLater,
     createPlaylistSlice,
     getPlaylist,
-    GetAllUserDataSlice
+    GetAllUserDataSlice,
+    ChatDataSlice,
+    groupSlice,
+    registrationSlice,
+    darkModelSlice
+  
   },
 });
 

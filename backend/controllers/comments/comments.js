@@ -1,8 +1,8 @@
 const {Comment,ReplyComment} = require('../../models/commentsModel/commentsModel'); // Adjust the path as necessary
 
 const createComment = async (req, res) => {
-  const { userId, videoId, content,likes,dislikes } = req.body; // Expecting these values in the request body
-
+  const {  videoId, content,likes,dislikes } = req.body; // Expecting these values in the request body
+  const userId = req.session.user_Id
   try {
     const comment = new Comment({
       user: userId,
@@ -15,7 +15,7 @@ const createComment = async (req, res) => {
     await comment.save();
     res.status(201).json({ success: true, comment });
   } catch (error) {
- console.log(error)
+
   }
 };
 
@@ -23,7 +23,8 @@ const createComment = async (req, res) => {
 const likeComment = async (req, res) => {
   try {
    
-    const {userID ,commentId} = req.body;  
+    const {commentId} = req.body;  
+    const userID = req.session.user_Id
     const OneComment = await Comment.findById(commentId);
     if (OneComment.likes.includes(userID)) {
        OneComment.likes = OneComment.likes.filter(id => id.toString() !== userID.toString());
@@ -42,8 +43,8 @@ const likeComment = async (req, res) => {
 const dislikeComment = async (req, res) => {
   try {
   
-    const {userID ,commentId} = req.body;   
- 
+    const { commentId} = req.body;   
+    const userID= req.session.user_Id
     const OneComment = await Comment.findById(commentId);
 
 
@@ -66,8 +67,8 @@ const dislikeComment = async (req, res) => {
 
 
 const replyComment = async (req, res) => {
-  const { userID,  commentId, content,likes,dislikes } = req.body; // Expecting these values in the request body
-
+  const {  commentId, content,likes,dislikes } = req.body; // Expecting these values in the request body
+  const userID = req.session.user_Id
   try{
     
     const Reply = new ReplyComment({ userID,  commentId, content,likes,dislikes });
@@ -86,8 +87,8 @@ const replyComment = async (req, res) => {
 const likeReplyComment = async (req, res) => {
   try {
    
-    const {userID ,commentId} = req.body; 
-    console.log(req.body)
+    const {commentId} = req.body; 
+    const userID = req.session.user_Id
     if(userID==null || commentId==null )  {
      return res.status(500).json({message:'not define'})
           }
@@ -109,15 +110,14 @@ const likeReplyComment = async (req, res) => {
 const dislikeReplyComment = async (req, res) => {
   try {
   
-    const {userID ,commentId} = req.body; 
-    console.log(req.body)
+    const {commentId} = req.body; 
+    const userID = req.session.user_Id
     if(userID==null || commentId==null )  {
 return res.status(500).json({message:'not define'})
     }
- console.log(req.body)
- console.log(commentId)
+
     const OneComment = await ReplyComment.findById(commentId);
-console.log(OneComment)
+
 
     if (OneComment.dislikes.includes(userID)) {
       OneComment.dislikes = OneComment.dislikes.filter(id => id.toString() !== userID.toString());
@@ -129,7 +129,7 @@ console.log(OneComment)
     res.status(200).json({ message: 'Dislike status updated', OneComment  });
     
   } catch (error) {
-    console.log(error)
+    (error)
     res.status(500).json({ error: 'Failed to update dislike' });
   }
 };
@@ -141,13 +141,13 @@ console.log(OneComment)
 // Get all comments for a specific video
 const getCommentsByVideo = async (req, res) => {
   const { videoId } = req.params; // Video ID from the request parameters
-console.log(videoId)
+
   try {
     const comments = await Comment.find({ video: videoId }).populate({path:'replies', populate:{path:'userID' ,strictPopulate: false}});
-  console.log(comments)
+ 
     res.status(200).json({ success: true, comments });
   } catch (error) {
-    console.log(error)
+
     res.status(500).json({ success: false, error });
   }
 };
