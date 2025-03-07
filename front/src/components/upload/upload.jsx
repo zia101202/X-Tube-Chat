@@ -56,7 +56,8 @@ const Upload = () => {
 
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/upload",
+            `${import.meta.env.VITE_API_UR}/api/upload`,
+           
             formData,
             {
               withCredentials: true, // ✅ Allows sending cookies with the request
