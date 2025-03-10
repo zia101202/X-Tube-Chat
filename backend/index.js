@@ -40,7 +40,7 @@ app.use(cookieParser());
 
 
 const corsOptions = {
-  origin: 'http://localhost:5173', // Allow only this origin
+  origin:process.env.FRONT, // Allow only this origin
   credentials: true,  // Allow credentials like cookies
   allowedHeaders: ["Content-Type", "Authorization"], // ✅ Allow necessary headers
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
@@ -67,7 +67,9 @@ app.use((req, res) => {
 });
 
 
-
+app.get("/", (req, res) => {
+  res.send("Welcome to the Video Upload API");
+})
 
 const PORT = process.env.PORT;
 console.log(process.env.LOCALHOST);
