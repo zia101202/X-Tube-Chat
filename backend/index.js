@@ -71,7 +71,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Video Upload API");
 })
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 console.log(process.env.LOCALHOST);
 server.listen(PORT, () => {
   `Server running on port ${PORT}`;
