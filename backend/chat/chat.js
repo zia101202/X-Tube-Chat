@@ -7,7 +7,7 @@ const initSocket = (server) => {
   const socketIo = require("socket.io");
   io = socketIo(server, {
     cors: {
-      origin: "http://localhost:5173", 
+      origin: process.env.FRONT, 
       credentials: true,
       allowedHeaders: ["Content-Type", "Authorization"], // ✅ Allow necessary headers
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
