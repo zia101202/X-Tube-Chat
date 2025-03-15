@@ -1,7 +1,118 @@
-create grup mai group name par click dalo aur group say naviagte karo details mai.waha say group id say message baijo.from mai user id and to mai group id dalo.
-backend mai group id say saray membe nikalo aur messaage emiy karo and data base mai message bi dalo
+# 🎬 X-Tube: A MERN-Based YouTube Clone
 
-add member work nahi kar raha
+## 🚀 Overview
+X-Tube is a **YouTube-like video-sharing platform** built using the **MERN (MongoDB, Express.js, React.js, Node.js) stack**. This platform enables users to **upload, share, like, dislike, comment on videos, and download** content. It also features a **real-time chat system** powered by **Socket.io**.
 
+---
 
-emaail miss horahi hai forget password mai pahlay otp varification aur pir  reset password laikin dusaray mai miss
+## 🌟 Features
+
+### 📹 Video Features
+- ✅ Upload and manage videos
+- ✅ Watch videos in different categories
+- ✅ Like 👍 & Dislike 👎 videos
+- ✅ Download 📥 videos for offline viewing
+- ✅ Add videos to the **Watch Later** playlist
+- ✅ Search 🔍 and filter videos by category
+- ✅ Share 📤 videos with others
+
+### 💬 Chat Features
+- ✅ Real-time chat with **Socket.io**
+- ✅ Private and group messaging
+- ✅ Online/offline status tracking
+- ✅ Emoji and media support 🎉
+
+### 🔒 Authentication & Security
+- ✅ **JWT Authentication** for secure login & sign-up
+- ✅ Google OAuth authentication 🌍
+- ✅ Secure video access and role-based permissions
+
+### 📊 Additional Features
+- ✅ Dark Mode 🌙 / Light Mode ☀️
+- ✅ Responsive UI for **mobile & desktop** 📱💻
+- ✅ Admin Dashboard for managing content
+
+---
+
+## 🛠️ Tech Stack
+
+### **Frontend** - [React.js](https://react.dev/)
+- **React Router** for navigation
+- **Redux Toolkit** for state management
+- **Tailwind CSS** for a modern UI
+- **Axios** for API requests
+
+### **Backend** - [Node.js](https://nodejs.org/) & [Express.js](https://expressjs.com/)
+- **MongoDB** & **Mongoose** for database
+- **Socket.io** for real-time chat
+- **JWT (JSON Web Tokens)** for authentication
+- **Cloudinary** for video storage
+
+### **Deployment**
+- **Frontend**: [Vercel](https://vercel.com/)  
+  **Live URL:** [X-Tube Frontend](https://x-tube-chat-uait.vercel.app/)
+- **Backend**: [Koyeb](https://www.koyeb.com/)  
+  **Live URL:** [X-Tube API](https://ashamed-georgina-ziaurrehmanx-8e9ce942.koyeb.app/)
+
+---
+
+## 🎯 Installation & Setup
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/yourusername/x-tube.git
+cd x-tube
+```
+
+### 2️⃣ Backend Setup
+```bash
+cd backend
+npm install
+npm start
+```
+
+### 3️⃣ Frontend Setup
+```bash
+cd frontend
+npm install
+npm start
+```
+
+---
+
+## 📜 API Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/auth/signup` | Register a new user |
+| `POST` | `/api/auth/login` | Login user |
+| `GET` | `/api/videos/` | Fetch all videos |
+| `POST` | `/api/videos/upload` | Upload a new video |
+| `POST` | `/api/chat/send` | Send a chat message |
+| `GET` | `/api/chat/messages` | Get all chat messages |
+
+---
+
+## 📷 Screenshots
+- 🎥 **Homepage**
+- 🔥 **Video Player**
+- 💬 **Chat Interface**
+- 🎛 **Admin Dashboard**
+
+---
+
+## 📌 Roadmap 🛣️
+- [ ] Implement **Live Streaming**
+- [ ] Add **Video Recommendations**
+- [ ] Improve **SEO & Performance**
+- [ ] Support for **Multiple Video Resolutions**
+
+---
+
+## 📝 License
+This project is **open-source** under the **MIT License**.
+
+## 🤝 Contributing
+Pull requests are welcome! Feel free to **fork** and improve the project. 🙌
+
+**🚀 Happy Coding!** 🎉
+
