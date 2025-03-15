@@ -3,26 +3,28 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 5173, // ✅ Change port if needed (default is 5173)
-    open: true, // ✅ Auto-open browser on start
-    cors: true, // ✅ Enable CORS if required
-    proxy: {
-      "/api": {
-        target: "http://localhost:5000", // ✅ Redirect API calls to backend
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-  },
+  base: "./", // ✅ Ensures correct path resolution in Netlify
+
   build: {
+    outDir: "dist", // ✅ Netlify needs the built folder to be `dist`
     rollupOptions: {
       output: {
         entryFileNames: `[name].js`,
       },
     },
   },
+
+  server: {
+    port: 5173,
+    open: true,
+    cors: true,
+    proxy: {
+      // ❌ This proxy won't work on Netlify, use a real API URL instead
+      "/api": {
+        target: "https://your-backend-url.com", // ✅ Replace with your actual backend URL
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 });
-
-
-
