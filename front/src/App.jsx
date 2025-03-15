@@ -21,7 +21,7 @@ import VerifyPassword from "./components/authentication/verifyPassword.jsx";
 import NewPassword from "./components/authentication/newPassword.jsx";
 import GoogleAuth from "./components/authentication/googleAuth.jsx";
 import ProfileUpdate from "./components/profile/profile.jsx";
-// 🔹 Protected Route Component
+
 const ProtectedRoute = ({ element }) => {
   const getCookie = (name) => {
     const cookies = document.cookie.split("; ");
@@ -41,6 +41,8 @@ const ProtectedRoute = ({ element }) => {
 };
 
 export default function App() {
+
+  
   return (
     <Router>
       <Routes>

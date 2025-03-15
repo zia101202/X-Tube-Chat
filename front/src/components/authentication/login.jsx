@@ -9,7 +9,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const navigate = useNavigate()
   const { darkModel } = useSelector((state) => state.darkModelSlice);
-  const darkMode = true;
+  const darkMode = darkModel;
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
