@@ -27,7 +27,8 @@ const verify = async (req, res) => {
 
       res.cookie('jwtToken', token, {
         httpOnly: false,
-        maxAge: 3600000
+        maxAge: 3600000,
+             sameSite:"None"
       });
        req.session.user_Id=savedUser._id
 
