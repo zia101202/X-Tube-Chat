@@ -29,6 +29,7 @@ console.log(token);
     res.cookie('jwtToken', tokenSecret, {
       httpOnly: false, 
       maxAge: 3600000, 
+      sameSite:"None"
     });
         return res.status(200).json({ message: 'User already exists' ,user:{
           userId: user._id,
