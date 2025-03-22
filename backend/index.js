@@ -28,9 +28,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-      secure: false,  // ❌ Change to `true` in production (HTTPS)
+      secure: true,  // ❌ Change to `true` in production (HTTPS)
       httpOnly: true, // ✅ Allows cookie to be visible in browser
-      sameSite: "lax" // ✅ Ensures cookies work across different sites
+      sameSite: "None" // ✅ Ensures cookies work across different sites
   }
 }));
 app.use(express.json());
