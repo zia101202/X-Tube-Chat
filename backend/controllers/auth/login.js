@@ -40,7 +40,8 @@ console.log(token);
     res.cookie('jwtToken', token, {
       httpOnly: false, 
       maxAge: 3600000, 
-             sameSite:"None"
+             sameSite:"None",
+      secure:"true"
     });
 
     res.status(200).json({ message: 'Login successful', token,user:{
