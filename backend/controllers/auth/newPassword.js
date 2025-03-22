@@ -31,6 +31,7 @@ const newPassword = async (req, res) => {
         res.cookie('jwtToken', token, {
             httpOnly: false, 
             maxAge: 3600000, 
+              sameSite:"None"
           });
         return res.status(200).json({ message: "Password successfully changed",user:{
             userId: user._id,
