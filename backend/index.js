@@ -29,7 +29,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
       secure: true,  // ❌ Change to `true` in production (HTTPS)
-      httpOnly: true, // ✅ Allows cookie to be visible in browser
+      httpOnly: false, // ✅ Allows cookie to be visible in browser
       sameSite: "None" // ✅ Ensures cookies work across different sites
   }
 }));
