@@ -36,6 +36,7 @@ const ProtectedRoute = ({ element }) => {
   const token = getCookie("jwtToken");
   
   console.log('this is token')
+  console.log(document.cookie)
 console.log(document.cookie.split("; "))
   console.log(document.cookie.split(""))
   console.log(token);
