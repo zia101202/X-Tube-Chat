@@ -36,6 +36,8 @@ const ProtectedRoute = ({ element }) => {
   const token = getCookie("jwtToken");
   
   console.log('this is token')
+console.log(document.cookie.split("; "))
+  console.log(document.cookie.split(""))
   console.log(token);
   return token ? element : <Navigate to="/Login" replace />;
 };
