@@ -28,7 +28,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-      secure: true,  // ❌ Change to `true` in production (HTTPS)
+      secure: false,  // ❌ Change to `true` in production (HTTPS)
       httpOnly: false, // ✅ Allows cookie to be visible in browser
       sameSite: "None" // ✅ Ensures cookies work across different sites
   }
