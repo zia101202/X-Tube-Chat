@@ -41,7 +41,7 @@ console.log(token);
       httpOnly: false, 
       maxAge: 3600000, 
              sameSite:"None",
-      secure:"true"
+      secure:"false"
     });
 
     res.status(200).json({ message: 'Login successful', token,user:{
