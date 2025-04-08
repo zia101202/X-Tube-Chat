@@ -35,7 +35,7 @@ const ProtectedRoute = ({ element }) => {
   // Example usage:
   const token = getCookie("jwtToken");
   
-  
+  console.log('this is token')
   console.log(token);
   return token ? element : <Navigate to="/Login" replace />;
 };
