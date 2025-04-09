@@ -29,7 +29,7 @@ const verify = async (req, res) => {
         httpOnly: false,
         maxAge: 3600000,
             sameSite:"None",
-      secure:"true"
+      secure:"false"
       });
        req.session.user_Id=savedUser._id
 
