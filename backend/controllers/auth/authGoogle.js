@@ -30,7 +30,7 @@ console.log(token);
       httpOnly: false, 
       maxAge: 3600000, 
       sameSite:"None",
-      secure:"true"
+      secure:"false"
     });
         return res.status(200).json({ message: 'User already exists' ,user:{
           userId: user._id,
@@ -49,7 +49,7 @@ console.log(token);
       httpOnly: false, 
       maxAge: 3600000, 
        sameSite:"None",
-      secure:"true"
+      secure:"false"
     });
     res.json({ success: true , user:{
       userId: newUser._id,
